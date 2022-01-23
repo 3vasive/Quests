@@ -1,0 +1,11 @@
+name: Quests
+version: '${project.version}'
+main: me.evasive.quests.Quests
+api-version: 1.18
+commands:
+  quests:
+    desciption: quests commands
+    usage: /quests
+  aquests:
+    desciption: quests commands
+    usage: /quests
