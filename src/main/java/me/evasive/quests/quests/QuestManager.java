@@ -1,6 +1,5 @@
 package me.evasive.quests.quests;
 
-import me.evasive.quests.Quests;
 import me.evasive.quests.configs.PlayerQuestsProgress;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,25 +19,25 @@ public class QuestManager {
 
     public int checkPerms(UUID uuid){
         int amount = 5;
-        if (Bukkit.getPlayer(uuid).hasPermission("Quests.extra_1")){
+        if (Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("Quests.extra_1")){
             amount = 6;
         }
-        if (Bukkit.getPlayer(uuid).hasPermission("Quests.extra_2")){
+        if (Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("Quests.extra_2")){
             amount = 7;
         }
-        if (Bukkit.getPlayer(uuid).hasPermission("Quests.extra_3")){
+        if (Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("Quests.extra_3")){
             amount = 8;
         }
-        if (Bukkit.getPlayer(uuid).hasPermission("Quests.extra_4")){
+        if (Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("Quests.extra_4")){
             amount = 9;
         }
-        if (Bukkit.getPlayer(uuid).hasPermission("Quests.extra_5")){
+        if (Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("Quests.extra_5")){
             amount = 10;
         }
-        if (Bukkit.getPlayer(uuid).hasPermission("Quests.extra_6")){
+        if (Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("Quests.extra_6")){
             amount = 11;
         }
-        if (Bukkit.getPlayer(uuid).hasPermission("Quests.extra_7")){
+        if (Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("Quests.extra_7")){
             amount = 12;
         }
         return amount;
@@ -48,7 +47,7 @@ public class QuestManager {
     public void getNewQuests(UUID uuid){
         ArrayList noDupe = new ArrayList();
         PQuestData pQuestData = new PQuestData();
-        Integer amount = checkPerms(uuid);
+        int amount = checkPerms(uuid);
         while (pQuestData.QL.size() != amount){
             Random rand = new Random();
             int randomNum = rand.nextInt((QuestCreator.questMap.size() - 1) + 1) + 1;
@@ -63,8 +62,8 @@ public class QuestManager {
 
     public ArrayList<Quest> getQuests(List<Integer> qids){
         ArrayList<Quest> old_quests = new ArrayList<>();
-        for (Integer i = 0; i < qids.size(); i++){
-            old_quests.add(QuestCreator.questMap.get(qids.get(i)));
+        for (Integer qid : qids) {
+            old_quests.add(QuestCreator.questMap.get(qid));
         }
         return old_quests;
     }
@@ -135,7 +134,7 @@ public class QuestManager {
 
     public void checkCompletion(Player player, UUID uuid, Integer qnum){
         PQuestData pQuestData = pquestMap.get(uuid);
-        Integer test = qnum - 1;
+        int test = qnum - 1;
         Quest quest = pQuestData.QL.get(test);
         if (qnum.equals(1)){
             //player.sendMessage("P1:" + pQuestData.P1 + "/" + quest.amount);
