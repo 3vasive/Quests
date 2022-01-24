@@ -25,21 +25,25 @@ public class QuestShopGUI {
         //Quest info
         ItemStack info = new ItemStack(Material.WRITABLE_BOOK);
         ItemMeta infometa = info.getItemMeta();
-        infometa.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Quest Shop info");
+        infometa.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "QUEST SHOP INFO");
         ArrayList<String> infolore = new ArrayList();
-        infolore.add(ChatColor.YELLOW + "Mobs have a chance on death to give you");
-        infolore.add(ChatColor.YELLOW + "tokens. Depending on the mob they may");
-        infolore.add(ChatColor.YELLOW + "drop more tokens or have a better chance.");
+        infolore.add(ChatColor.GRAY + "Spend quest points earned from");
+        infolore.add(ChatColor.GRAY + "completing /quests here");
         infometa.setLore(infolore);
         info.setItemMeta(infometa);
         questsShop.setItem(8, info);
 
         //Quest Point/shop button
-        ItemStack points = new ItemStack(Material.GHAST_TEAR);
+        ItemStack points = new ItemStack(Material.NETHER_STAR);
         ItemMeta pointsItemMeta = points.getItemMeta();
-        pointsItemMeta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Quest Points");
+        pointsItemMeta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "QUEST POINTS");
         ArrayList<String> pointsItemLore = new ArrayList();
-        pointsItemLore.add(ChatColor.YELLOW + "Balance: " + QuestGUI.questPointManager.getPoints(player.getUniqueId()));
+        pointsItemLore.add(ChatColor.GRAY + "Obtained through completing quests");
+        pointsItemLore.add("");
+        pointsItemLore.add(ChatColor.AQUA + "" + ChatColor.BOLD + "YOUR POINTS:");
+        pointsItemLore.add(ChatColor.GRAY + "" + "♦ " + ChatColor.RESET + "" + ChatColor.GRAY + QuestGUI.questPointManager.getPoints(player.getUniqueId()) + " Quest Points");
+        //pointsItemLore.add("");
+        //pointsItemLore.add(ChatColor.GRAY + "Left-Click to open Quest Point Shop");
         pointsItemMeta.setLore(pointsItemLore);
         points.setItemMeta(pointsItemMeta);
         questsShop.setItem(0, points);
@@ -48,6 +52,19 @@ public class QuestShopGUI {
         ItemMeta meta1 = fill.getItemMeta();
         meta1.setDisplayName(ChatColor.GRAY + "");
         fill.setItemMeta(meta1);
+
+        ItemStack shop_item1 = new ItemStack(Material.DIAMOND_PICKAXE);
+        ItemMeta shop_item1Meta = shop_item1.getItemMeta();
+        shop_item1Meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Quester's Pickaxe");
+        ArrayList<String> shop_item1Lore = new ArrayList();
+        shop_item1Lore.add(ChatColor.GRAY + "A pickaxe forged for the mightiest questers in the land");
+        shop_item1Lore.add("");
+        shop_item1Lore.add(ChatColor.GRAY + "- Some really cool ability");
+        shop_item1Lore.add("");
+        shop_item1Lore.add(ChatColor.GRAY + "Cost: 10 Quest Points");
+        shop_item1Meta.setLore(shop_item1Lore);
+        shop_item1.setItemMeta(shop_item1Meta);
+        questsShop.setItem(11, shop_item1);
 
         questsShop.setItem(1, fill);
         questsShop.setItem(2, fill);

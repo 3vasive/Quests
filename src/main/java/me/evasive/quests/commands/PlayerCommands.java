@@ -24,11 +24,13 @@ public class PlayerCommands implements CommandExecutor {
             if(args.length == 0){
                 QuestGUI questGUI = new QuestGUI(plugin);
                 questGUI.openGui(player);
+                return true;
             }
             if (args.length == 1){
                 if (args[0].equals("shop")){
                     QuestShopGUI questShopGUI = new QuestShopGUI(plugin);
                     questShopGUI.openGui(player);
+                    return true;
                 }
             }
 

@@ -26,6 +26,7 @@ public final class Quests extends JavaPlugin {
         new AdminCommands(this);
         new PlayerCommands(this);
         getServer().getPluginManager().registerEvents(new QuestEvents(this), this);
+        QuestGUI.questManager.ServerStart(this);
         getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Quest Started");
     }
 
