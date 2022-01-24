@@ -220,53 +220,29 @@ public class QuestManager {
     public boolean complete(UUID uuid, Integer qnum){
         PQuestData pQuestData = pquestMap.get(uuid);
         if (qnum.equals(1)){
-            if (pQuestData.PC1) {
-                return true;
-            }
+            return pQuestData.PC1;
         } else if (qnum.equals(2)){
-            if (pQuestData.PC2) {
-                return true;
-            }
+            return pQuestData.PC2;
         } else if (qnum.equals(3)){
-            if (pQuestData.PC3) {
-                return true;
-            }
+            return pQuestData.PC3;
         } else if (qnum.equals(4)){
-            if (pQuestData.PC4) {
-                return true;
-            }
+            return pQuestData.PC4;
         } else if (qnum.equals(5)){
-            if (pQuestData.PC5) {
-                return true;
-            }
+            return pQuestData.PC5;
         } else if (qnum.equals(6)){
-            if (pQuestData.PC6) {
-                return true;
-            }
+            return pQuestData.PC6;
         } else if (qnum.equals(7)){
-            if (pQuestData.PC7) {
-                return true;
-            }
+            return pQuestData.PC7;
         } else if (qnum.equals(8)){
-            if (pQuestData.PC8) {
-                return true;
-            }
+            return pQuestData.PC8;
         } else if (qnum.equals(9)){
-            if (pQuestData.PC9) {
-                return true;
-            }
+            return pQuestData.PC9;
         } else if (qnum.equals(10)){
-            if (pQuestData.PC10) {
-                return true;
-            }
+            return pQuestData.PC10;
         } else if (qnum.equals(11)){
-            if (pQuestData.PC11) {
-                return true;
-            }
+            return pQuestData.PC11;
         } else if (qnum.equals(12)){
-            if (pQuestData.PC12) {
-                return true;
-            }
+            return pQuestData.PC12;
         }
          return false;
     }
@@ -279,24 +255,7 @@ public class QuestManager {
             getNewQuests(uuid);
         }
     }
-/*
-    int P1 = 0;
-    int P2 = 0;
-    int P3 = 0;
-    int P4 = 0;
-    int P5 = 0;
-    int P6 = 0;
-    int P7 = 0;
-    ArrayList<Quest> QL = new ArrayList();
-    Boolean PC1 = false;
-    Boolean PC2 = false;
-    Boolean PC3 = false;
-    Boolean PC4 = false;
-    Boolean PC5 = false;
-    Boolean PC6 = false;
-    Boolean PC7 = false;
-    LocalDate date = null;
- */
+
     public void saveWorldData() {
         PlayerQuestsProgress.setup();
         for (Map.Entry<UUID, PQuestData> players : pquestMap.entrySet()) {
@@ -326,7 +285,7 @@ public class QuestManager {
             PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress12", players.getValue().P12);
             PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete12", players.getValue().PC12);
             List<Integer> questlist = new ArrayList<>();
-            for (Integer i = 0; i < players.getValue().QL.size(); i++){
+            for (int i = 0; i < players.getValue().QL.size(); i++){
                 questlist.add(players.getValue().QL.get(i).id);
             }
             PlayerQuestsProgress.get().set("Players." + players.getKey() + ".QuestList", questlist);
@@ -339,7 +298,7 @@ public class QuestManager {
         if (load != null) {
             if (load.getConfigurationSection("Players") != null) {
                 Objects.requireNonNull(load.getConfigurationSection("Players")).getKeys(false).forEach(key -> {
-                    LocalDate date = LocalDate.parse(PlayerQuestsProgress.get().getString("Players." + key + ".Date"));
+                    LocalDate date = LocalDate.parse(Objects.requireNonNull(PlayerQuestsProgress.get().getString("Players." + key + ".Date")));
                     PQuestData pQuestData = new PQuestData();
                     pQuestData.date = date;
                     pQuestData.P1 = PlayerQuestsProgress.get().getInt("Players." + key + ".Progress1");
@@ -367,8 +326,7 @@ public class QuestManager {
                     pQuestData.P12 = PlayerQuestsProgress.get().getInt("Players." + key + ".Progress12");
                     pQuestData.PC12 = PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete12");
                     List<Integer> questlist = PlayerQuestsProgress.get().getIntegerList("Players." + key + ".QuestList");
-                    ArrayList<Quest> quests = getQuests(questlist);
-                    pQuestData.QL = quests;
+                    pQuestData.QL = getQuests(questlist);
 
                     pquestMap.put(UUID.fromString(key), pQuestData);
                 });
@@ -377,7 +335,7 @@ public class QuestManager {
         }
     }
 
-    public int scheduleRepeatAtTime(Plugin plugin, Runnable task, int hour){
+    public void scheduleRepeatAtTime(Plugin plugin, Runnable task, int hour){
         Calendar cal = Calendar.getInstance();
         long now = cal.getTimeInMillis();
         if(cal.get(Calendar.HOUR_OF_DAY) >= hour)
@@ -388,7 +346,7 @@ public class QuestManager {
         cal.set(Calendar.MILLISECOND, 0);
         long offset = cal.getTimeInMillis() - now;
         long ticks = offset / 50L;
-        return Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, task, ticks, 1728000L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, task, ticks, 1728000L);
     }
 
     public void ServerStart(Plugin plugin){
