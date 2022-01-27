@@ -21,12 +21,16 @@ public final class Quests extends JavaPlugin {
         QuestCreator.createQuest();
         PlayersQuestPoints.setup();
         PlayerQuestsProgress.setup();
+
         QuestGUI.questManager.loadWorldData();
         QuestGUI.questPointManager.loadWorldData();
+        QuestGUI.questManager.ServerStart(this);
+
         new AdminCommands(this);
         new PlayerCommands(this);
+
         getServer().getPluginManager().registerEvents(new QuestEvents(this), this);
-        QuestGUI.questManager.ServerStart(this);
+
         getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Quest Started");
     }
 

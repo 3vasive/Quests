@@ -112,20 +112,20 @@ public class QuestGUI {
             ItemStack tempQuest;
             if (i < questManager.getQuestList(player.getUniqueId()).size()) {
                 Quest quest = questManager.getQuestList(player.getUniqueId()).get(i);
-                tempQuest = new ItemStack(quest.item);
+                tempQuest = new ItemStack(quest.getItem());
                 ItemMeta tempQuestItemMeta = tempQuest.getItemMeta();
-                tempQuestItemMeta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + quest.name + ":");
+                tempQuestItemMeta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + quest.getName() + ":");
                 ArrayList<String> tempQuestItemLore = new ArrayList();
-                tempQuestItemLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "◍ " + ChatColor.RESET + "" + ChatColor.GRAY + quest.description);
+                tempQuestItemLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "◍ " + ChatColor.RESET + "" + ChatColor.GRAY + quest.getDescription());
                 tempQuestItemLore.add("");
                 tempQuestItemLore.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Progress:");
-                tempQuestItemLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "◍ " + ChatColor.RESET + "" + ChatColor.GRAY + questManager.GetQuestProgression(player.getUniqueId(), i + 1) + "/" + quest.amount);
+                tempQuestItemLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "◍ " + ChatColor.RESET + "" + ChatColor.GRAY + questManager.GetQuestProgression(player.getUniqueId(), i + 1) + "/" + quest.getAmount());
                 tempQuestItemLore.add("");
                 tempQuestItemLore.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Reward:");
-                tempQuestItemLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "◍ " + ChatColor.RESET + "" + ChatColor.GRAY + quest.reward + " Quest Points");
+                tempQuestItemLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "◍ " + ChatColor.RESET + "" + ChatColor.GRAY + quest.getReward() + " Quest Points");
                 if (questManager.complete(player.getUniqueId(), i + 1)) {
                     tempQuestItemLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "QUEST COMPLETED");
-                    tempQuestItemMeta.setDisplayName(ChatColor.STRIKETHROUGH + quest.name);
+                    tempQuestItemMeta.setDisplayName(ChatColor.STRIKETHROUGH + quest.getName());
                     tempQuestItemMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
                     tempQuestItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 }

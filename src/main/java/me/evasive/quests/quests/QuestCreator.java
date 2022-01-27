@@ -14,23 +14,21 @@ public class QuestCreator {
     public static void createQuest(){
         QuestsConfig.get().getConfigurationSection("Quests").getKeys(false).forEach(iteminfo ->{
             Quest quest = new Quest();
-            quest.id = QuestsConfig.get().getInt("Quests." + iteminfo + ".ID");
-            quest.name = QuestsConfig.get().getString("Quests." + iteminfo + ".Name");
-            quest.description = QuestsConfig.get().getString("Quests." + iteminfo + ".Description");
-            quest.item = Material.valueOf(QuestsConfig.get().getString("Quests." + iteminfo + ".Display_Item"));
-            quest.amount = QuestsConfig.get().getInt("Quests." + iteminfo + ".Amount");
-            quest.reward = QuestsConfig.get().getInt("Quests." + iteminfo + ".Reward");
-            quest.type = QuestsConfig.get().getString("Quests." + iteminfo + ".Type");
-            if (!QuestsConfig.get().getString("Quests." + iteminfo + ".MobType").equals("null")){
-                quest.mobtype = EntityType.valueOf(QuestsConfig.get().getString("Quests." + iteminfo + ".MobType"));
-            }else{
-                quest.mobtype = null;
-            }
-            if (!QuestsConfig.get().getString("Quests." + iteminfo + ".BlockType").equals("null")){
-                quest.blocktype = Material.valueOf(QuestsConfig.get().getString("Quests." + iteminfo + ".BlockType"));
-            }else{
-                quest.blocktype = null;
-            }
+            quest.setId(QuestsConfig.get().getInt("Quests." + iteminfo + ".ID"));
+            quest.setName(QuestsConfig.get().getString("Quests." + iteminfo + ".Name"));
+            quest.setDescription(QuestsConfig.get().getString("Quests." + iteminfo + ".Description"));
+            quest.setItem(Material.valueOf(QuestsConfig.get().getString("Quests." + iteminfo + ".Display_Item")));
+            quest.setAmount(QuestsConfig.get().getInt("Quests." + iteminfo + ".Amount"));
+            quest.setReward(QuestsConfig.get().getInt("Quests." + iteminfo + ".Reward"));
+            quest.setType(QuestsConfig.get().getString("Quests." + iteminfo + ".Type"));
+            if (!QuestsConfig.get().getString("Quests." + iteminfo + ".MobType").equals("null"))
+                quest.setMobtype(EntityType.valueOf(QuestsConfig.get().getString("Quests." + iteminfo + ".MobType")));
+            else
+                quest.setMobtype(null);
+            if (!QuestsConfig.get().getString("Quests." + iteminfo + ".BlockType").equals("null"))
+                quest.setBlocktype(Material.valueOf(QuestsConfig.get().getString("Quests." + iteminfo + ".BlockType")));
+            else
+                quest.setBlocktype(null);
             questMap.put(Integer.parseInt(iteminfo), quest);
         });
     }

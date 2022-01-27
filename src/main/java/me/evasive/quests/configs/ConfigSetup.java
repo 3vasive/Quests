@@ -1,6 +1,7 @@
 package me.evasive.quests.configs;
 
 import me.evasive.quests.Quests;
+import me.evasive.quests.quests.Quest;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
@@ -34,5 +35,6 @@ public class ConfigSetup {
         QuestsConfig.get().addDefault("Quests.1.BlockType", "null");
         QuestsConfig.get().options().copyDefaults(true);
         QuestsConfig.save();
+
     }
 }
