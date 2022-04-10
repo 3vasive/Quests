@@ -1,6 +1,7 @@
 package me.evasive.quests.quests;
 
-import me.evasive.quests.configs.PlayerQuestsProgress;
+import me.evasive.quests.configs.PlayerDataConfig;
+//import me.evasive.quests.configs.PlayerQuestsProgress;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,6 +37,8 @@ public class QuestManager {
         ArrayList<Integer> noDupe = new ArrayList<>();
         PQuestData pQuestData = new PQuestData();
         int amount = checkPerms(uuid);
+        //Checks if there are enough quests to fill players quests
+        if (QuestCreator.questMap.size() < amount) return;
         while (pQuestData.getQL().size() != amount){
             Random rand = new Random();
             int randomNum = rand.nextInt((QuestCreator.questMap.size() - 1) + 1) + 1;
@@ -98,80 +101,38 @@ public class QuestManager {
     }
 
     public void saveWorldData() {
-        PlayerQuestsProgress.setup();
+        PlayerDataConfig.setup();
         for (Map.Entry<UUID, PQuestData> players : pquestMap.entrySet()) {
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Date", players.getValue().getDate().toString());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress1", players.getValue().getP1());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete1", players.getValue().getPC1());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress2", players.getValue().getP2());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete2", players.getValue().getPC2());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress3", players.getValue().getP3());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete3", players.getValue().getPC3());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress4", players.getValue().getP4());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete4", players.getValue().getPC4());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress5", players.getValue().getP5());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete5", players.getValue().getPC5());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress6", players.getValue().getP6());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete6", players.getValue().getPC6());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress7", players.getValue().getP7());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete7", players.getValue().getPC7());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress8", players.getValue().getP8());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete8", players.getValue().getPC8());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress9", players.getValue().getP9());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete9", players.getValue().getPC9());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress10", players.getValue().getP10());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete10", players.getValue().getPC10());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress11", players.getValue().getP11());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete11", players.getValue().getPC11());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Progress12", players.getValue().getP12());
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".Complete12", players.getValue().getPC12());
+                PlayerDataConfig.get().set("Players." + players.getKey() + ".Date", players.getValue().getDate().toString());
+                PlayerDataConfig.get().set("Players." + players.getKey() + ".Progress", players.getValue().getProgress());
+                PlayerDataConfig.get().set("Players." + players.getKey() + ".Completed", players.getValue().getCompleted());
             List<Integer> questlist = new ArrayList<>();
             for (int i = 0; i < players.getValue().getQL().size(); i++){
                 questlist.add(players.getValue().getQL().get(i).getId());
             }
-            PlayerQuestsProgress.get().set("Players." + players.getKey() + ".QuestList", questlist);
+            PlayerDataConfig.get().set("Players." + players.getKey() + ".QuestList", questlist);
         }
-        PlayerQuestsProgress.save();
+        PlayerDataConfig.save();
     }
 
     public void loadWorldData() {
-        FileConfiguration load = PlayerQuestsProgress.get();
+        FileConfiguration load = PlayerDataConfig.get();
         if (load != null) {
             if (load.getConfigurationSection("Players") != null) {
                 Objects.requireNonNull(load.getConfigurationSection("Players")).getKeys(false).forEach(key -> {
-                    LocalDate date = LocalDate.parse(Objects.requireNonNull(PlayerQuestsProgress.get().getString("Players." + key + ".Date")));
+                    LocalDate date = LocalDate.parse(Objects.requireNonNull(PlayerDataConfig.get().getString("Players." + key + ".Date")));
                     PQuestData pQuestData = new PQuestData();
                     pQuestData.setDate(date);
-                    pQuestData.setP1(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress1"));
-                    pQuestData.setPC1(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete1"));
-                    pQuestData.setP2(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress2"));
-                    pQuestData.setPC2(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete2"));
-                    pQuestData.setP3(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress3"));
-                    pQuestData.setPC3(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete3"));
-                    pQuestData.setP4(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress4"));
-                    pQuestData.setPC4(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete4"));
-                    pQuestData.setP5(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress5"));
-                    pQuestData.setPC5(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete5"));
-                    pQuestData.setP6(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress6"));
-                    pQuestData.setPC6(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete6"));
-                    pQuestData.setP7(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress7"));
-                    pQuestData.setPC7(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete7"));
-                    pQuestData.setP8(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress8"));
-                    pQuestData.setPC8(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete8"));
-                    pQuestData.setP9(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress9"));
-                    pQuestData.setPC9(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete9"));
-                    pQuestData.setP10(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress10"));
-                    pQuestData.setPC10(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete10"));
-                    pQuestData.setP11(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress11"));
-                    pQuestData.setPC11(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete11"));
-                    pQuestData.setP12(PlayerQuestsProgress.get().getInt("Players." + key + ".Progress12"));
-                    pQuestData.setPC12(PlayerQuestsProgress.get().getBoolean("Players." + key + ".Complete12"));
-                    List<Integer> questlist = PlayerQuestsProgress.get().getIntegerList("Players." + key + ".QuestList");
+                    ArrayList<Integer> Progress = (ArrayList<Integer>) PlayerDataConfig.get().getList("Players." + key + ".Progress");
+                    ArrayList<Boolean> Completed = (ArrayList<Boolean>) PlayerDataConfig.get().getList("Players." + key + ".Completed");
+                    pQuestData.setProgress(Progress);
+                    pQuestData.setCompleted(Completed);
+                    List<Integer> questlist = PlayerDataConfig.get().getIntegerList("Players." + key + ".QuestList");
                     pQuestData.setQL(getQuests(questlist));
 
                     pquestMap.put(UUID.fromString(key), pQuestData);
                 });
-                PlayerQuestsProgress.save();
+                PlayerDataConfig.save();
             }
         }
     }

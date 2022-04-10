@@ -2,7 +2,7 @@ package me.evasive.quests.commands;
 
 import me.evasive.quests.Quests;
 import me.evasive.quests.quests.QuestGUI;
-import me.evasive.quests.quests.QuestShopGUI;
+import me.evasive.quests.questshop.QuestShopGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

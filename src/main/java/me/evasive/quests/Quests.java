@@ -2,9 +2,7 @@ package me.evasive.quests;
 
 import me.evasive.quests.commands.AdminCommands;
 import me.evasive.quests.commands.PlayerCommands;
-import me.evasive.quests.configs.PlayerQuestsProgress;
-import me.evasive.quests.configs.PlayersQuestPoints;
-import me.evasive.quests.configs.QuestsConfig;
+import me.evasive.quests.configs.*;
 import me.evasive.quests.quests.QuestCreator;
 import me.evasive.quests.quests.QuestEvents;
 import me.evasive.quests.quests.QuestGUI;
@@ -18,9 +16,13 @@ public final class Quests extends JavaPlugin {
         // Plugin startup logic
         this.saveDefaultConfig();
         QuestsConfig.setup();
+
         QuestCreator.createQuest();
-        PlayersQuestPoints.setup();
-        PlayerQuestsProgress.setup();
+
+        //PlayersQuestPoints.setup();
+        //PlayerQuestsProgress.setup();
+        QuestShopConfig.setup();
+        PlayerDataConfig.setup();
 
         QuestGUI.questManager.loadWorldData();
         QuestGUI.questPointManager.loadWorldData();

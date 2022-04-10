@@ -1,6 +1,7 @@
 package me.evasive.quests.questpoints;
 
-import me.evasive.quests.configs.PlayersQuestPoints;
+import me.evasive.quests.configs.PlayerDataConfig;
+//import me.evasive.quests.configs.PlayersQuestPoints;
 import me.evasive.quests.quests.PQuestData;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -40,22 +41,22 @@ public class QuestPointManager {
     }
 
     public void saveWorldData() {
-        PlayersQuestPoints.setup();
+        PlayerDataConfig.setup();
         for (Map.Entry<UUID, Integer> players : points.entrySet()) {
-            PlayersQuestPoints.get().set("Players." + players.getKey() + ".Points", players.getValue());
+            PlayerDataConfig.get().set("Players." + players.getKey() + ".Points", players.getValue());
         }
-        PlayersQuestPoints.save();
+        PlayerDataConfig.save();
     }
 
     public void loadWorldData() {
-        FileConfiguration load = PlayersQuestPoints.get();
+        FileConfiguration load = PlayerDataConfig.get();
         if (load != null) {
             if (load.getConfigurationSection("Players") != null) {
                 Objects.requireNonNull(load.getConfigurationSection("Players")).getKeys(false).forEach(key -> {
-                    Integer point = PlayersQuestPoints.get().getInt("Players." + key + ".Points");
+                    Integer point = PlayerDataConfig.get().getInt("Players." + key + ".Points");
                     points.put(UUID.fromString(key), point);
                 });
-                PlayersQuestPoints.save();
+                PlayerDataConfig.save();
             }
         }
     }

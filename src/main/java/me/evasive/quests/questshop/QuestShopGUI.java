@@ -1,6 +1,7 @@
-package me.evasive.quests.quests;
+package me.evasive.quests.questshop;
 
 import me.evasive.quests.Quests;
+import me.evasive.quests.quests.QuestGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

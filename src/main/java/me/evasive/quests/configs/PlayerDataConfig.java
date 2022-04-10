@@ -8,11 +8,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class PlayersQuestPoints {
-
+public class PlayerDataConfig {
     public Quests plugin;
 
-    public PlayersQuestPoints(Quests plugin){
+    public PlayerDataConfig(Quests plugin){
         this.plugin = plugin;
     }
 
@@ -20,11 +19,12 @@ public class PlayersQuestPoints {
     private static FileConfiguration questConfig;
 
     public static void setup(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Quests").getDataFolder(), "questpoints.yml");
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Quests").getDataFolder(), "PlayerData.yml");
 
         if (!file.exists()){
             try{
                 file.createNewFile();
+                new ConfigSetup(Quests.getPlugin(Quests.class)).QuestConfigSetup();
             }catch (IOException e){
 
             }

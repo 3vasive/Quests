@@ -8,11 +8,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class PlayerQuestsProgress {
+public class QuestShopConfig {
 
     public Quests plugin;
 
-    public PlayerQuestsProgress(Quests plugin){
+    public QuestShopConfig(Quests plugin){
         this.plugin = plugin;
     }
 
@@ -20,11 +20,12 @@ public class PlayerQuestsProgress {
     private static FileConfiguration questConfig;
 
     public static void setup(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Quests").getDataFolder(), "questprogress.yml");
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Quests").getDataFolder(), "questShop.yml");
 
         if (!file.exists()){
             try{
                 file.createNewFile();
+                new ConfigSetup(Quests.getPlugin(Quests.class)).QuestConfigSetup();
             }catch (IOException e){
 
             }
@@ -49,5 +50,4 @@ public class PlayerQuestsProgress {
     public static void reload(){
         questConfig = YamlConfiguration.loadConfiguration(file);
     }
-
 }

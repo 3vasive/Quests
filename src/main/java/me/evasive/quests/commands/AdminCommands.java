@@ -60,6 +60,16 @@ public class AdminCommands implements CommandExecutor {
                         return true;
                     }
                 }
+            }else if (args.length == 4){
+                if(args[0].equals("loot")){
+                    if (args[1].equals("add")){
+                        int amount = Integer.valueOf(args[2]);
+                        int price = Integer.valueOf(args[3]);
+
+                    } else if (args[1].equals("remove")){
+
+                    }
+                }
             }
         }
         return false;

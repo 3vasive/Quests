@@ -60,23 +60,10 @@ public class QuestGUI {
         info.setItemMeta(infometa);
         quests.setItem(8, info);
 
+
+
         //Timer for reset quest
-        ItemStack timer = new ItemStack(Material.CLOCK);
-        ItemMeta timermeta = timer.getItemMeta();
-        timermeta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "QUESTS RESET");
-        ArrayList<String> timerlore = new ArrayList();
-        ZoneId z = ZoneId.of("America/New_York");
-        ZonedDateTime now = ZonedDateTime.now(z);
-        ZonedDateTime todayStart = now.toLocalDate().atStartOfDay(z);
-        Duration timeer = Duration.between(todayStart, now);
-        long delay = 86400000 - timeer.toMillis();
-        int seconds = (int) (delay / 1000) % 60;
-        int minutes = (int) ((delay / (1000 * 60)) % 60);
-        int hours = (int) ((delay / (1000 * 60 * 60)) % 24);
-        timerlore.add(ChatColor.GRAY + "Quest's reset in: " + "" + hours + ":" + minutes + ":" + seconds);
-        timermeta.setLore(timerlore);
-        timer.setItemMeta(timermeta);
-        quests.setItem(4, timer);
+        createClock(quests);
 
         ItemStack fill = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta meta1 = fill.getItemMeta();
@@ -154,29 +141,39 @@ public class QuestGUI {
         updateTimer(quests);
     }
 
+    private void createClock(Inventory quests) {
+        ItemStack timer = new ItemStack(Material.CLOCK);
+        ItemMeta timermeta = timer.getItemMeta();
+        timermeta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "QUESTS RESET");
+        ArrayList<String> timerlore = new ArrayList();
+        ZoneId z = ZoneId.of("America/New_York");
+        ZonedDateTime now = ZonedDateTime.now(z);
+        ZonedDateTime todayStart = now.toLocalDate().atStartOfDay(z);
+        Duration timeer = Duration.between(todayStart, now);
+        long delay = 86400000 - timeer.toMillis();
+        int seconds = (int) (delay / 1000) % 60;
+        String sec = String.format("%02d", seconds);
+        int minutes = (int) ((delay / (1000 * 60)) % 60);
+        String min = String.format("%02d", minutes);
+        int hours = (int) ((delay / (1000 * 60 * 60)) % 24);
+        String hr = String.format("%02d", hours);
+        timerlore.add(ChatColor.GRAY + "Quest's reset in: "  + hr + ":" + min + ":" + sec);
+        timermeta.setLore(timerlore);
+        timer.setItemMeta(timermeta);
+        quests.setItem(4, timer);
+    }
+
     public void updateTimer(Inventory quests) {
         id = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Quests.getPlugin(Quests.class), new TimerTask() {
             @Override
             public void run() {
-                ItemStack timer = new ItemStack(Material.CLOCK);
-                ItemMeta timermeta = timer.getItemMeta();
-                timermeta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "QUESTS RESET");
-                ArrayList<String> timerlore = new ArrayList();
-                ZoneId z = ZoneId.of("America/New_York");
-                ZonedDateTime now = ZonedDateTime.now(z);
-                ZonedDateTime todayStart = now.toLocalDate().atStartOfDay(z);
-                Duration timeer = Duration.between(todayStart, now);
-                long delay = 86400000 - timeer.toMillis();
-                int seconds = (int) (delay / 1000) % 60;
-                int minutes = (int) ((delay / (1000 * 60)) % 60);
-                int hours = (int) ((delay / (1000 * 60 * 60)) % 24);
-                timerlore.add(ChatColor.GRAY + "Quest's reset in: " + "" + hours + ":" + minutes + ":" + seconds);
-                timermeta.setLore(timerlore);
-                timer.setItemMeta(timermeta);
-                quests.setItem(4, timer);
+                createClock(quests);
             }
         }, 0, 20);
     }
+
+
+
 
     public void stopTimer() {
         Bukkit.getServer().getScheduler().cancelTasks(Quests.getPlugin(Quests.class));

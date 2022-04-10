@@ -1,6 +1,7 @@
 package me.evasive.quests.quests;
 
 import me.evasive.quests.Quests;
+import me.evasive.quests.questshop.QuestShopGUI;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -76,7 +77,7 @@ public class QuestEvents implements Listener {
         for (int i = 0; i < amount; i++) {
             if (QuestGUI.questManager.getQuestList(uuid).get(i) == null) continue;
             Quest quest = QuestGUI.questManager.getQuestList(uuid).get(i);
-            if (!e.getBlock().getType().equals(quest.getBlocktype()) && !quest.getBlocktype().equals(Material.AIR))
+            if (quest.getBlocktype() == null || (!e.getBlock().getType().equals(quest.getBlocktype()) && !quest.getBlocktype().equals(Material.AIR)))
                 continue;
             if (quest.getType().equals("Break")) {
                 if (QuestGUI.questManager.GetQuestProgression(uuid, i + 1) >= quest.getAmount() && !(farm.contains(e.getBlock().getType())))
@@ -140,15 +141,22 @@ public class QuestEvents implements Listener {
         if (!event.getView().getTitle().equals("Quest Menu") && !event.getView().getTitle().equals("Quest Shop"))
             return;
         if (event.getView().getTitle().equals("Quest Shop")) {
+            /*
+            Shop items put into object then a list of object to be placed in shop
+            Every player will have the same items that rotate every day
+            rewards will be tiered and every week there will be 3 commons, 2 rares, 1 epic, 1 legendary, 2 random
+            Also double check already made objects to see if you can simplify
+            */
             event.setCancelled(true);
             return;
         }
-        if (event.getSlot() != 0) {
-            event.setCancelled(true);
-            return;
+        if (event.getSlot() == 0) {
+            QuestShopGUI questShopGUI = new QuestShopGUI(plugin);
+            questShopGUI.openGui((Player) event.getWhoClicked());
         }
-        QuestShopGUI questShopGUI = new QuestShopGUI(plugin);
-        questShopGUI.openGui((Player) event.getWhoClicked());
+        event.setCancelled(true);
+        return;
+
     }
 
     @EventHandler
