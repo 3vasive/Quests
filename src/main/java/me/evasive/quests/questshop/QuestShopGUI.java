@@ -54,7 +54,7 @@ public class QuestShopGUI {
         meta1.setDisplayName(ChatColor.GRAY + "");
         fill.setItemMeta(meta1);
 
-        ItemStack shop_item1 = new ItemStack(Material.DIAMOND_PICKAXE);
+        /*ItemStack shop_item1 = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta shop_item1Meta = shop_item1.getItemMeta();
         shop_item1Meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Quester's Pickaxe");
         ArrayList<String> shop_item1Lore = new ArrayList();
@@ -65,7 +65,7 @@ public class QuestShopGUI {
         shop_item1Lore.add(ChatColor.GRAY + "Cost: 10 Quest Points");
         shop_item1Meta.setLore(shop_item1Lore);
         shop_item1.setItemMeta(shop_item1Meta);
-        questsShop.setItem(11, shop_item1);
+        questsShop.setItem(11, shop_item1);*/
 
         questsShop.setItem(1, fill);
         questsShop.setItem(2, fill);

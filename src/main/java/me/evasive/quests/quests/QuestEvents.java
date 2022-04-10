@@ -36,6 +36,7 @@ public class QuestEvents implements Listener {
     public void move(PlayerMoveEvent e) {
         UUID uuid = e.getPlayer().getUniqueId();
         int amount = QuestGUI.questManager.checkPerms(uuid);
+        if (QuestCreator.questMap.size() < amount) amount = QuestCreator.questMap.size();
         for (int i = 0; i < amount; i++) {
             if (QuestGUI.questManager.getQuestList(uuid).get(i) == null) continue;
             Quest quest = QuestGUI.questManager.getQuestList(uuid).get(i);
@@ -52,6 +53,7 @@ public class QuestEvents implements Listener {
     public void place(BlockPlaceEvent e) {
         UUID uuid = e.getPlayer().getUniqueId();
         int amount = QuestGUI.questManager.checkPerms(uuid);
+        if (QuestCreator.questMap.size() < amount) amount = QuestCreator.questMap.size();
         for (int i = 0; i < amount; i++) {
             if (QuestGUI.questManager.getQuestList(uuid).get(i) == null) continue;
             Quest quest = QuestGUI.questManager.getQuestList(uuid).get(i);
@@ -74,6 +76,7 @@ public class QuestEvents implements Listener {
     public void mine(BlockBreakEvent e) {
         UUID uuid = e.getPlayer().getUniqueId();
         int amount = QuestGUI.questManager.checkPerms(uuid);
+        if (QuestCreator.questMap.size() < amount) amount = QuestCreator.questMap.size();
         for (int i = 0; i < amount; i++) {
             if (QuestGUI.questManager.getQuestList(uuid).get(i) == null) continue;
             Quest quest = QuestGUI.questManager.getQuestList(uuid).get(i);
@@ -99,6 +102,7 @@ public class QuestEvents implements Listener {
     public void fish(PlayerFishEvent e) {
         UUID uuid = e.getPlayer().getUniqueId();
         int amount = QuestGUI.questManager.checkPerms(uuid);
+        if (QuestCreator.questMap.size() < amount) amount = QuestCreator.questMap.size();
         for (int i = 0; i < amount; i++) {
             if (QuestGUI.questManager.getQuestList(uuid).get(i) == null) continue;
             Quest quest = QuestGUI.questManager.getQuestList(uuid).get(i);
@@ -119,6 +123,7 @@ public class QuestEvents implements Listener {
         Player player = e.getEntity().getKiller();
         UUID uuid = player.getUniqueId();
         int amount = QuestGUI.questManager.checkPerms(uuid);
+        if (QuestCreator.questMap.size() < amount) amount = QuestCreator.questMap.size();
         for (int i = 0; i < amount; i++) {
             if (QuestGUI.questManager.getQuestList(uuid).get(i) == null) continue;
             Quest quest = QuestGUI.questManager.getQuestList(uuid).get(i);

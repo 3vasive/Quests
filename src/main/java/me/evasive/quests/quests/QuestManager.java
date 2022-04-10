@@ -37,9 +37,7 @@ public class QuestManager {
         ArrayList<Integer> noDupe = new ArrayList<>();
         PQuestData pQuestData = new PQuestData();
         int amount = checkPerms(uuid);
-        //Checks if there are enough quests to fill players quests
-        if (QuestCreator.questMap.size() < amount) return;
-        while (pQuestData.getQL().size() != amount){
+        while (pQuestData.getQL().size() < amount && noDupe.size() < QuestCreator.questMap.size()){
             Random rand = new Random();
             int randomNum = rand.nextInt((QuestCreator.questMap.size() - 1) + 1) + 1;
             if (!noDupe.contains(randomNum)) {
