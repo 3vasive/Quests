@@ -1,5 +1,6 @@
 # Quests
 
+Versions: Made on 1.18 but will also work on 1.19
 A spigot plugin that lets you create quests for player to complete throughout the day.\
 use /quest to open the quest menu
 ## Permisions
